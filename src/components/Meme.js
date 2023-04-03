@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { saveAs } from "file-saver";
 
 const Meme = () => {
   const [memes, setMemes] = useState({});
@@ -18,6 +19,10 @@ const Meme = () => {
     setMemes({});
     loadMeme();
   };
+
+  const downloadMeme = () => {
+    saveAs(memes.url, memes.title);
+  };
   return (
     <div>
       {memes?.url ? (
@@ -32,6 +37,21 @@ const Meme = () => {
             }}
             alt={memes.title}
           />
+
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#BDCDD6",
+              color: "#000",
+              fontWeight: "bold",
+              fontFamily: "Alkatra",
+              display: "block",
+              margin: "20px auto",
+            }}
+            onClick={downloadMeme}
+          >
+            Download This Meme
+          </Button>
 
           <Button
             variant="contained"
