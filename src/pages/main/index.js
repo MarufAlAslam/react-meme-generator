@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import React from "react";
 import Meme from "../../components/Meme";
 
@@ -16,6 +16,9 @@ const Main = () => {
         flexDirection: "column",
       }}
     >
+      <Typography variant="h1" component="h1" style={{ marginBottom: "30px" }}>
+        🤣
+      </Typography>
       <Typography
         variant="h4"
         component="h4"
@@ -23,6 +26,7 @@ const Main = () => {
         align="center"
         fontWeight={"bold"}
         fontFamily={"Alkatra"}
+        style={{ marginBottom: "30px" }}
         gutterBottom
       >
         Meme Generator

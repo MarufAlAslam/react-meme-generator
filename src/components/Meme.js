@@ -15,6 +15,7 @@ const Meme = () => {
 
   //   reload meme
   const reloadMeme = () => {
+    setMemes({});
     loadMeme();
   };
   return (
@@ -23,7 +24,12 @@ const Meme = () => {
         <>
           <img
             src={memes.url}
-            style={{ maxWidth: "85%", margin: "auto", display: "block" }}
+            style={{
+              maxWidth: "95%",
+              margin: "auto",
+              display: "block",
+              marginBottom: "30px",
+            }}
             alt={memes.title}
           />
 
@@ -39,7 +45,7 @@ const Meme = () => {
             }}
             onClick={reloadMeme}
           >
-            Next Meme
+            Next Meme 🤣 🤣 🤣
           </Button>
         </>
       ) : (
