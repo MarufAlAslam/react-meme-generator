@@ -1,6 +1,5 @@
 import { Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import UrlImageDownloader from "react-url-image-downloader";
 
 const Meme = () => {
   const [memes, setMemes] = useState({});
@@ -20,6 +19,32 @@ const Meme = () => {
     loadMeme();
   };
 
+  // remove query string from url
+  const imgUrl = memes.url?.split("?")[0];
+
+  const downloadImage = () => {
+    fetch(imgUrl, {
+      method: "GET",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "image/jpeg",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((res) => res.blob())
+      .then((blob) => {
+        // create blob link to download
+        const url = window.URL.createObjectURL(new Blob([blob]));
+
+        // create a link to download
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "meme.jpg"); //or any other extension
+        link.click();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
       {memes?.url ? (
@@ -37,22 +62,49 @@ const Meme = () => {
             Meme Shooter
           </Typography>
 
-          <UrlImageDownloader imageUrl={memes.url} />
+          <img
+            style={{ width: "95%", margin: "30px auto", display: "block" }}
+            src={imgUrl}
+            alt=""
+          ></img>
 
-          <Button
-            variant="contained"
+          <div
             style={{
-              backgroundColor: "#BDCDD6",
-              color: "#000",
-              fontWeight: "bold",
-              fontFamily: "Alkatra",
-              display: "block",
-              margin: "60px auto 20px auto",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
-            onClick={reloadMeme}
           >
-            Next Meme 🤣 🤣 🤣
-          </Button>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "#BDCDD6",
+                color: "#000",
+                fontWeight: "bold",
+                fontFamily: "Alkatra",
+                display: "block",
+                margin: "20px auto",
+              }}
+              onClick={downloadImage}
+            >
+              Download
+            </Button>
+
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "#BDCDD6",
+                color: "#000",
+                fontWeight: "bold",
+                fontFamily: "Alkatra",
+                display: "block",
+                margin: "20px auto",
+              }}
+              onClick={reloadMeme}
+            >
+              Next Meme 🤣 🤣 🤣
+            </Button>
+          </div>
         </>
       ) : (
         <Typography
