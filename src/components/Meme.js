@@ -20,9 +20,21 @@ const Meme = () => {
     loadMeme();
   };
 
-  const downloadMeme = () => {
-    saveAs(memes.url, memes.title);
-  };
+  function downloadMeme(url) {
+    fetch(url, {
+      mode: "no-cors",
+    })
+      .then((response) => response.blob())
+      .then((blob) => {
+        let blobUrl = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.download = url.replace(/^.*[\\\/]/, "");
+        a.href = blobUrl;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+  }
   return (
     <div>
       {memes?.url ? (
@@ -48,7 +60,7 @@ const Meme = () => {
               display: "block",
               margin: "20px auto",
             }}
-            onClick={downloadMeme}
+            onClick={() => downloadMeme(memes.url)}
           >
             Download This Meme
           </Button>
